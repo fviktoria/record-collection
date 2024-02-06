@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import styles from "@record-collection/styles/Home.module.css";
 import { Box, Button } from "@chakra-ui/react";
 import { AlbumOverview } from "@record-collection/components/album-overview/album-overview";
-import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
 import { getCollection } from "@record-collection/util/get-collection";
 import { getWishlist } from "@record-collection/util/get-wishlist";
@@ -14,6 +15,7 @@ import {
   DiscogsWantsResponseInterface,
 } from "@record-collection/types/discogs.types";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,9 +57,15 @@ export default function Home({
 export const getStaticProps: GetStaticProps<{
   collection: DiscogsReleasesResponseInterface;
   wishlist: DiscogsWantsResponseInterface;
-}> = async (context) => {
+}> = async ({ locale = "en" }) => {
   const collection = await getCollection();
   const wishlist = await getWishlist();
 
-  return { props: { collection, wishlist } };
+  return {
+    props: {
+      collection,
+      wishlist,
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 };
