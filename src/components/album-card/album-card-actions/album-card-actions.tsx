@@ -12,11 +12,12 @@ import {
 	Input,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 
 import { isAlbumTypeWithReserved } from '@record-collection/types/guards/wishlist.guards';
+import { usePageContext } from '@record-collection/context/page-context';
 
 import type { ComponentProps, FC, PropsWithChildren } from 'react';
 import type { AlbumGridCard } from '../album-grid-card/album-grid-card';
@@ -32,46 +33,80 @@ export const AlbumCardActions: FC<PropsWithChildren<AlbumCardActionsProps>> = ({
 	isReserved,
 }) => {
 	const { t } = useTranslation();
+	const { setWishlist } = usePageContext();
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = useRef(null);
 
 	const [email, setEmail] = useState('');
-	const [error] = useState<string>();
+	const [error, setError] = useState<string>();
+	const [isSubmitting, setIsSubmitting] = useState<boolean>();
 
-	//   const setReserved = useSubmit();
-	//   const isSubmitting = useMemo(
-	//     () => navigation.state === "loading" || navigation.state === "submitting",
-	//     [navigation]
-	//   );
+	const fetchWishlist = useCallback(async () => {
+		try {
+			const response = await fetch('/api/wishlist');
+			const wishlist = await response.json();
+			setWishlist(wishlist);
+		} catch (e) {
+			return null;
+		}
+	}, [setWishlist]);
 
-	//   const handleReserve = useCallback(() => {
-	//     if (!email || email.length === 0) {
-	//       setError(t("albumCard.reserve.error"));
-	//       return;
-	//     } else {
-	//       setError(undefined);
-	//     }
+	const setReserved = useCallback(async () => {
+		setIsSubmitting(true);
+		try {
+			await fetch('/api/wishlist/reserve', {
+				method: 'POST',
+				body: JSON.stringify({ id: album.id, email }),
+			});
+			await fetchWishlist();
+			setIsSubmitting(false);
+		} catch (e) {
+			setError('There was an error reserving the album');
+		}
+	}, [album.id, email, fetchWishlist]);
 
-	//     setReserved({ albumId: album.id, email }, { method: "post" });
-	//   }, [email, setReserved, album.id, t]);
+	const undoReserve = useCallback(async () => {
+		setIsSubmitting(true);
+		try {
+			await fetch('/api/wishlist/reserve', {
+				method: 'DELETE',
+				body: JSON.stringify({ id: album.id, email }),
+			});
+			await fetchWishlist();
+			setIsSubmitting(false);
+		} catch (e) {
+			setError('There was an error undoing the reservation');
+		}
+	}, [album.id, email, fetchWishlist]);
 
-	//   const handleUndoReserve = useCallback(() => {
-	//     if (!email || email.length === 0) {
-	//       setError(t("albumCard.reserve.error"));
-	//       return;
-	//     } else {
-	//       setError(undefined);
-	//     }
+	const handleReserve = useCallback(() => {
+		if (!email || email.length === 0) {
+			setError(t('albumCard.reserve.errors.email'));
+			return;
+		} else {
+			setError(undefined);
+		}
 
-	//     setReserved({ albumId: album.id, email }, { method: "delete" });
-	//   }, [email, setReserved, album.id, t]);
+		setReserved();
+	}, [email, setReserved, t]);
 
-	//   useEffect(() => {
-	//     if (!isSubmitting) {
-	//       onClose();
-	//     }
-	//   }, [onClose, navigation.state, isSubmitting]);
+	const handleUndoReserve = useCallback(() => {
+		if (!email || email.length === 0) {
+			setError(t('albumCard.reserve.errors.email'));
+			return;
+		} else {
+			setError(undefined);
+		}
+
+		undoReserve();
+	}, [email, undoReserve, t]);
+
+	useEffect(() => {
+		if (!isSubmitting) {
+			onClose();
+		}
+	}, [onClose, isSubmitting]);
 
 	const title = isReserved
 		? t('albumCard.undoReserve.title')
@@ -132,9 +167,9 @@ export const AlbumCardActions: FC<PropsWithChildren<AlbumCardActionsProps>> = ({
 								{t('labels.cancel')}
 							</Button>
 							<Button
-								// onClick={isReserved ? handleUndoReserve : handleReserve}
+								onClick={isReserved ? handleUndoReserve : handleReserve}
 								ml={3}
-								// isLoading={isSubmitting}
+								isLoading={isSubmitting}
 							>
 								{isReserved ? t('labels.undoReserve') : t('labels.reserve')}
 							</Button>
