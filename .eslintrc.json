@@ -1,3 +1,86 @@
 {
-  "extends": "next/core-web-vitals"
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint", "prettier", "import", "react-hooks"],
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:prettier/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react-hooks/recommended"
+	],
+	"ignorePatterns": [
+		"*.svg",
+		"*.jpg",
+		"*.jpeg",
+		"*.png",
+		"*.mp4",
+		"*.ico",
+		"*.html",
+		"*.yaml",
+		"*.yml",
+		"Dockerfile",
+		"tsconfig.tsbuildinfo",
+		"lib/types/contentful",
+		"package*.json",
+		"README.md",
+		"export"
+	],
+	"overrides": [
+		{
+			"files": ["*.js"],
+			"rules": {
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		},
+		{
+			"files": ["*.tsx"],
+			"rules": { "jsx-a11y/alt-text": "off" } // alt-text is handled inside image component
+		},
+		{
+			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+			"rules": {
+				"@typescript-eslint/consistent-type-imports": ["error"],
+				"import/first": ["error"],
+				"import/no-useless-path-segments": ["error"],
+				"import/no-duplicates": ["error"],
+				"import/order": [
+					"error",
+					{
+						"pathGroups": [
+							{
+								"pattern": "@record-collection/**",
+								"group": "internal"
+							}
+						],
+						"groups": [
+							["external", "builtin"],
+							"internal",
+							["index", "sibling", "parent"],
+							"object",
+							"type"
+						],
+						"newlines-between": "always",
+						"pathGroupsExcludedImportTypes": ["type"]
+					}
+				],
+				"no-restricted-imports": [
+					"error",
+					{
+						"paths": [
+							{
+								"name": "react-i18next",
+								"message": "Please use next-i18next import instead to avoid hydration errors"
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }

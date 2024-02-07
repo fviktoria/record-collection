@@ -1,5 +1,5 @@
-import { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from 'react';
 
-export const Main: FC<PropsWithChildren<{}>> = ({ children }) => {
-  return <main>{children}</main>;
+export const Main: FC<PropsWithChildren<unknown>> = ({ children }) => {
+	return <main>{children}</main>;
 };
