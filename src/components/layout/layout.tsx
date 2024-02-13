@@ -19,7 +19,7 @@ export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
 				<Flex alignItems="center" gap={6} marginBottom={16} as={Link} href="/">
 					<Avatar
 						name={process.env.NEXT_PUBLIC_OWNER_NAME}
-						src="/record-collection-logo.png"
+						src={process.env.NEXT_PUBLIC_OWNER_AVATAR}
 					/>
 					<Text as="h1" fontSize="6xl" fontWeight="bold">
 						{t('page.title', { name: process.env.NEXT_PUBLIC_OWNER_NAME })}
