@@ -3,6 +3,8 @@ import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { Settings } from '../settings/settings';
+
 import type { FC, PropsWithChildren } from 'react';
 
 export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
@@ -25,6 +27,8 @@ export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
 				</Flex>
 				{children}
 			</Container>
+
+			<Settings />
 		</>
 	);
 };
