@@ -16,13 +16,23 @@ export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
 			</Head>
 
 			<Box overflowX="hidden">
-				<Container maxWidth="90vw" marginTop={24} marginBottom={16}>
-					<Flex alignItems="center" gap={6} marginBottom={16} as={Link} href="/">
+				<Container
+					maxWidth="90vw"
+					marginTop={{ base: 16, md: 24 }}
+					marginBottom={{ base: 12, md: 16 }}
+				>
+					<Flex
+						alignItems="center"
+						gap={{ base: 3, md: 6 }}
+						marginBottom={{ base: 8, md: 16 }}
+						as={Link}
+						href="/"
+					>
 						<Avatar
 							name={process.env.NEXT_PUBLIC_OWNER_NAME}
 							src={process.env.NEXT_PUBLIC_OWNER_AVATAR}
 						/>
-						<Text as="h1" fontSize="6xl" fontWeight="bold">
+						<Text as="h1" fontSize={{ base: '3xl', md: '6xl' }} fontWeight="bold">
 							{t('page.title', { name: process.env.NEXT_PUBLIC_OWNER_NAME })}
 						</Text>
 					</Flex>

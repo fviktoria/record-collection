@@ -90,7 +90,7 @@ export const AlbumOverview = <T extends AlbumType[]>({
 					md: 3,
 				}}
 			>
-				<Heading as="h2" size="xl">
+				<Heading as="h2" size={{ base: 'lg', md: 'xl' }}>
 					{heading}
 				</Heading>
 				{showCount && (
