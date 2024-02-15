@@ -18,7 +18,7 @@ export default function Collection({
 	const { t } = useTranslation();
 
 	return (
-		<Layout>
+		<Layout showBackButton>
 			<Box as="section">
 				<AlbumOverview
 					heading={t('collection.title')}

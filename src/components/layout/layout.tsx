@@ -4,10 +4,18 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import { Settings } from '../settings/settings';
+import { BackButton } from '../back-button/back-button';
 
 import type { FC, PropsWithChildren } from 'react';
 
-export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
+type LayoutProps = {
+	showBackButton?: boolean;
+};
+
+export const Layout: FC<PropsWithChildren<LayoutProps>> = ({
+	showBackButton,
+	children,
+}) => {
 	const { t } = useTranslation();
 	return (
 		<>
@@ -20,7 +28,9 @@ export const Layout: FC<PropsWithChildren<object>> = ({ children }) => {
 					maxWidth="90vw"
 					marginTop={{ base: 16, md: 24 }}
 					marginBottom={{ base: 12, md: 16 }}
+					position="relative"
 				>
+					{showBackButton && <BackButton />}
 					<Flex
 						alignItems="center"
 						gap={{ base: 3, md: 6 }}

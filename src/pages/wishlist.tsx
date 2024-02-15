@@ -29,7 +29,7 @@ export default function Wishlist({
 	if (!wishlist) return null;
 
 	return (
-		<Layout>
+		<Layout showBackButton>
 			<Box as="section" mt={12}>
 				<AlbumOverview
 					heading={t('wishlist.title')}

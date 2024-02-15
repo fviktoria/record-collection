@@ -27,7 +27,7 @@ export const AlbumListCard: FC<ComponentProps<typeof AlbumGridCard>> = ({
 		<Card opacity={isReserved ? 0.4 : 1}>
 			<CardBody>
 				<Flex
-					gap={3}
+					gap={{ base: 0, md: 3 }}
 					flexDirection={{ base: 'column', md: 'row' }}
 					justifyContent={{ md: 'space-between' }}
 					alignItems={{ md: 'center' }}
