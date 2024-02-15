@@ -10,8 +10,8 @@ const defaultSettings: ComponentProps<typeof Splide> = {
 		gap: '1rem',
 		fixedWidth: '25vw',
 		breakpoints: {
-			768: {
-				fixedWidth: '50vw',
+			992: {
+				fixedWidth: '70vw',
 			},
 		},
 	},
