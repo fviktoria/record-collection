@@ -44,8 +44,8 @@ export const Settings: FC = () => {
 				</IconButton>
 			</StyledSettingsWrapper>
 			<Modal isOpen={isOpen} onClose={onClose}>
-				<ModalOverlay />
-				<ModalContent>
+				<ModalOverlay backdropFilter="blur(10px)" />
+				<ModalContent ml={6} mr={6}>
 					<ModalHeader>{t('labels.settings')}</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
