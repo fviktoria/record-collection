@@ -21,6 +21,7 @@ import { useTranslation } from 'next-i18next';
 import { useDebounce } from '@record-collection/hooks/use-debounce';
 
 import { AlbumCard } from '../album-card/album-card';
+import { Carousel } from '../carousel/carousel';
 
 import type { AlbumType } from '@record-collection/types/discogs.types';
 import type { ChangeEventHandler } from 'react';
@@ -134,25 +135,37 @@ export const AlbumOverview = <T extends AlbumType[]>({
 					</InputGroup>
 				</Flex>
 			)}
-			<Grid
-				templateColumns={
-					variant === 'grid'
-						? {
-								base: 'repeat(1, minmax(0,1fr))',
-								md: 'repeat(2, minmax(0,1fr))',
-								lg: 'repeat(4, minmax(0,1fr))',
-							}
-						: 'minmax(0, 1fr)'
-				}
-				gap={6}
-				mb={6}
-			>
-				{filteredAlbums.map((album) => (
-					<GridItem key={album.id}>
-						<AlbumCard album={album} showFooter={showFooter} variant={variant} />
-					</GridItem>
-				))}
-			</Grid>
+			{!isTeaser ? (
+				<Grid
+					templateColumns={
+						variant === 'grid'
+							? {
+									base: 'repeat(1, minmax(0,1fr))',
+									md: 'repeat(2, minmax(0,1fr))',
+									lg: 'repeat(4, minmax(0,1fr))',
+								}
+							: 'minmax(0, 1fr)'
+					}
+					gap={6}
+					mb={6}
+				>
+					{filteredAlbums.map((album) => (
+						<GridItem key={album.id}>
+							<AlbumCard album={album} showFooter={showFooter} variant={variant} />
+						</GridItem>
+					))}
+				</Grid>
+			) : (
+				<Box marginBottom={6}>
+					<Carousel>
+						{filteredAlbums.map((album) => (
+							<GridItem key={album.id}>
+								<AlbumCard album={album} showFooter={showFooter} variant={variant} />
+							</GridItem>
+						))}
+					</Carousel>
+				</Box>
+			)}
 		</>
 	);
 };
