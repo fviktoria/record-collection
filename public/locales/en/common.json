@@ -10,7 +10,8 @@
 		"email": "E-Mail",
 		"undoReserve": "Undo reservation",
 		"prev": "Previous",
-		"next": "Next"
+		"next": "Next",
+		"showAll": "Show all"
 	},
 	"albumCard": {
 		"viewOnline": "View Online",
@@ -35,12 +36,10 @@
 		"labelReserved": "Label reserved records"
 	},
 	"wishlist": {
-		"title": "My Wishlist",
-		"viewAll": "View all"
+		"title": "My Wishlist"
 	},
 	"collection": {
-		"title": "My Collection",
-		"viewAll": "View all"
+		"title": "My Collection"
 	},
 	"privacy": {
 		"title": "Privacy",

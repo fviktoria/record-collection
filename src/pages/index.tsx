@@ -29,9 +29,10 @@ export default function Home({
 					albums={collection?.releases as AlbumType[]}
 					showFooter={false}
 					isTeaser
+					overviewLink="/collection"
 				/>
 				<Button as={Link} href="/collection">
-					{t('collection.viewAll')}
+					{t('labels.showAll')}
 				</Button>
 			</Box>
 
@@ -41,9 +42,10 @@ export default function Home({
 					albums={wishlist?.wants as AlbumType[]}
 					showFooter={false}
 					isTeaser
+					overviewLink="/wishlist"
 				/>
 				<Button as={Link} href="/wishlist">
-					{t('wishlist.viewAll')}
+					{t('labels.showAll')}
 				</Button>
 			</Box>
 		</Layout>

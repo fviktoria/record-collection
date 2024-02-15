@@ -10,7 +10,8 @@
 		"email": "E-Mail",
 		"undoReserve": "Reservierung aufheben",
 		"prev": "Zurück",
-		"next": "Weiter"
+		"next": "Weiter",
+		"showAll": "Alle anzeigen"
 	},
 	"albumCard": {
 		"viewOnline": "Zum Shop",
@@ -35,12 +36,10 @@
 		"labelReserved": "Bereits reservierte Schallplatten markieren"
 	},
 	"wishlist": {
-		"title": "Meine Wunschliste",
-		"viewAll": "Alle anzeigen"
+		"title": "Meine Wunschliste"
 	},
 	"collection": {
-		"title": "Meine Sammlung",
-		"viewAll": "Alle anzeigen"
+		"title": "Meine Sammlung"
 	},
 	"privacy": {
 		"title": "Datenschutz",

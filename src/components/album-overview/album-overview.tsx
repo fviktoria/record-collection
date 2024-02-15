@@ -22,6 +22,7 @@ import { useDebounce } from '@record-collection/hooks/use-debounce';
 
 import { AlbumCard } from '../album-card/album-card';
 import { Carousel } from '../carousel/carousel';
+import { AlbumPreviewCard } from '../album-card/album-preview-card/album-preview-card';
 
 import type { AlbumType } from '@record-collection/types/discogs.types';
 import type { ChangeEventHandler } from 'react';
@@ -33,6 +34,7 @@ type AlbumOverviewProps<T extends AlbumType[] = AlbumType[]> = {
 	showFooter?: boolean;
 	variant?: 'grid' | 'list';
 	isTeaser?: boolean;
+	overviewLink?: string;
 };
 
 export const AlbumOverview = <T extends AlbumType[]>({
@@ -42,6 +44,7 @@ export const AlbumOverview = <T extends AlbumType[]>({
 	showFooter,
 	variant: defaultVariant = 'grid',
 	isTeaser = false,
+	overviewLink,
 }: AlbumOverviewProps<T>) => {
 	const { t } = useTranslation();
 
@@ -166,6 +169,14 @@ export const AlbumOverview = <T extends AlbumType[]>({
 								variant={variant}
 							/>
 						))}
+						{overviewLink && (
+							<AlbumPreviewCard
+								album={albums[0]}
+								showFooter={showFooter}
+								variant={variant}
+								href={overviewLink}
+							/>
+						)}
 					</Carousel>
 				</Box>
 			)}
