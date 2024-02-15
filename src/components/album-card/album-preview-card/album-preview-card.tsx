@@ -20,7 +20,7 @@ export const AlbumPreviewCard: FC<AlbumPreviewCardProps> = ({
 	return (
 		// FIXME: check typing
 		<Box __css={container as SystemStyleObject} overflow="hidden" position="relative">
-			<Box filter="blur(20px)">
+			<Box filter="blur(20px)" transform="scale(1.1)">
 				<AlbumCard {...albumCardProps} />
 			</Box>
 			<StyledButton as={Link} href={href}>
