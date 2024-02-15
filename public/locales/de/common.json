@@ -8,7 +8,9 @@
 		"reserve": "Reservieren",
 		"cancel": "Abbrechen",
 		"email": "E-Mail",
-		"undoReserve": "Reservierung aufheben"
+		"undoReserve": "Reservierung aufheben",
+		"prev": "Zurück",
+		"next": "Weiter"
 	},
 	"albumCard": {
 		"viewOnline": "Zum Shop",

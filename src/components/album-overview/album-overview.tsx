@@ -159,9 +159,12 @@ export const AlbumOverview = <T extends AlbumType[]>({
 				<Box marginBottom={6}>
 					<Carousel>
 						{filteredAlbums.map((album) => (
-							<GridItem key={album.id}>
-								<AlbumCard album={album} showFooter={showFooter} variant={variant} />
-							</GridItem>
+							<AlbumCard
+								key={album.id}
+								album={album}
+								showFooter={showFooter}
+								variant={variant}
+							/>
 						))}
 					</Carousel>
 				</Box>

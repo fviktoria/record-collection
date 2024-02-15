@@ -8,7 +8,9 @@
 		"reserve": "Reserve",
 		"cancel": "Cancel",
 		"email": "E-Mail",
-		"undoReserve": "Undo reservation"
+		"undoReserve": "Undo reservation",
+		"prev": "Previous",
+		"next": "Next"
 	},
 	"albumCard": {
 		"viewOnline": "View Online",
