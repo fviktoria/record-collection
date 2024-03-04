@@ -1,11 +1,6 @@
-import type {
-	AlbumTypeWithReserved,
-	UpstashWishlistItemInterface,
-} from '../wishlist.types';
+import type { AlbumTypeWithReserved, WishlistItemInterface } from '../wishlist.types';
 
-export const isUpstashWishlistItem = (
-	value: unknown,
-): value is UpstashWishlistItemInterface => {
+export const isUpstashWishlistItem = (value: unknown): value is WishlistItemInterface => {
 	if (!value) return false;
 	if (typeof value !== 'object') return false;
 	return true;

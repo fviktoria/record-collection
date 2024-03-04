@@ -1,7 +1,4 @@
-import { isUpstashWishlistItem } from '../types/guards/wishlist.guards';
-import { getRedisClient } from './redis-client';
-
-import type { UpstashWishlistItemInterface } from '../types/wishlist.types';
+import { getPrismaClient } from './prisma-client';
 
 export type SetReservedParams = {
 	id: string;
@@ -9,34 +6,34 @@ export type SetReservedParams = {
 };
 
 export const getWishlistReserved = async (ids: string[]) => {
-	const redisClient = getRedisClient();
-	if (!redisClient) return;
+	const prismaClient = getPrismaClient();
+	if (!prismaClient) return;
 
 	// will return: [ { reserved: true }, null ]
-	const values: (UpstashWishlistItemInterface | null)[] = await redisClient.mget(ids);
+	const reservedItems = await prismaClient.wishlistReservation.findMany({
+		where: { recordId: { in: ids } },
+	});
 
-	// match values with ids (=keys)
-	const matchedValues: Record<string, UpstashWishlistItemInterface> = values.reduce(
-		(acc, value, index) => {
-			if (value !== null && isUpstashWishlistItem(value)) {
-				acc[ids[index]] = value;
-			}
-			return acc;
-		},
-		{} as Record<string, UpstashWishlistItemInterface>,
-	);
-
-	return matchedValues;
+	return reservedItems.map((item) => item.recordId);
 };
 
 export const setItemAsReserved = async ({ id, email }: SetReservedParams) => {
-	const redisClient = getRedisClient();
-	await redisClient?.set(id, { reserved: true, email });
+	const prismaClient = getPrismaClient();
+
+	if (!id || !email) throw new Error('wishlist.error.missing-id-or-email');
+
+	await prismaClient.wishlistReservation.upsert({
+		where: { recordId: id },
+		create: { recordId: id, email },
+		update: { email },
+	});
 };
 
 export const undoSetItemAsReserved = async ({ id, email }: SetReservedParams) => {
-	const redisClient = getRedisClient();
-	const item = await redisClient?.get<UpstashWishlistItemInterface>(id);
+	const prismaClient = getPrismaClient();
+	const item = await prismaClient.wishlistReservation.findUnique({
+		where: { recordId: id },
+	});
 
 	if (!item) {
 		return { status: 'error', message: 'wishlist.error.item-not-found' };
@@ -48,7 +45,7 @@ export const undoSetItemAsReserved = async ({ id, email }: SetReservedParams) =>
 	}
 
 	try {
-		await redisClient?.del(id);
+		await prismaClient.wishlistReservation.delete({ where: { recordId: id } });
 		return { status: 'success' };
 	} catch {
 		return { status: 'error', message: 'wishlist.error.redis-error' };
