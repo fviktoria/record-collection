@@ -11,10 +11,10 @@ export const getWishlistWithReserved = async () => {
 
 	const wantsWithReserved: DiscogsWantsWithReservedInterface[] = wishlist.wants.map(
 		(album) => {
-			const reservedItem = reservedItems?.[album.id.toString()];
+			const reservedItem = reservedItems?.find((item) => item === album.id.toString());
 
 			if (reservedItem) {
-				return { ...album, reserved: reservedItem.reserved };
+				return { ...album, reserved: true };
 			} else {
 				return { ...album, reserved: false };
 			}

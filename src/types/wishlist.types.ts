@@ -1,7 +1,6 @@
 import type { AlbumType } from './discogs.types';
 
-export interface UpstashWishlistItemInterface {
-	reserved?: boolean;
+export interface WishlistItemInterface {
 	email?: string;
 }
 
